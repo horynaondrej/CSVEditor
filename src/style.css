@@ -1,0 +1,36 @@
+
+.table-view {
+	-fx-background-color: #808080;
+	-fx-text-fill: #000000;
+}
+
+.table-cell {
+	-fx-text-fill: #000000;
+}
+
+.table-row-cell, .table-row-cell:odd {
+	-fx-background-color: #dfdfdf, #ffffff;
+	-fx-table-cell-border-color: #dfdfdf;
+}
+
+.table-row-cell:empty {
+	-fx-background-color: #222222, #1c1c1c;
+	-fx-table-cell-border-color: #222222;
+}
+
+.table-row-cell:hover {
+	-fx-background-color: #BEEB9F;
+}
+
+.table-row-cell:selected {
+	-fx-background-color: #00A388;
+}
+
+.text-field-table-cell .text-field {
+	-fx-padding: 0; 
+	-fx-border: none;
+	-fx-background-color: #ffffff;
+}
+
+
+
