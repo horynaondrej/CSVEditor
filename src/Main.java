@@ -5,15 +5,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.application.Platform;
 
-
-/**
- * TO-DO
- * 2) Check open file
- * 3) Check user dialog inserts - mark and coding
- * 4) Close dialog window exception
- */
-
-
 /**
  * Main class; This app is a simple CSV editor for fast use
  */
