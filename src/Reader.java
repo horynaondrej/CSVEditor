@@ -23,6 +23,7 @@ public class Reader {
     private String coding;
     private String[] line;
     private String file_name;
+    private boolean quote;
 
     /**
      * Class constructor
@@ -30,12 +31,13 @@ public class Reader {
      * @param key
      * @param code
      */
-    public Reader(Stage g, char key, String code) {
+    public Reader(Stage g, char key, String code, boolean quote) {
 
         this.data = FXCollections.observableArrayList();
         this.g = g;
         this.separator = key;
         this.coding = code;
+        this.quote = quote;
 
     }
 
@@ -47,7 +49,14 @@ public class Reader {
         try {
             File file = this.make_connection();
             this.file_name = file.getName();
-            CSVReader reader = new CSVReader(new InputStreamReader(new FileInputStream(file.getAbsoluteFile()), this.coding), this.separator, '\"', true);
+            CSVReader reader = new CSVReader(
+                    new InputStreamReader(
+                            new FileInputStream(file.getAbsoluteFile()),
+                            this.coding),
+                    this.separator,
+                    '\"',
+                    this.quote
+            );
             while ((this.line = reader.readNext()) != null) {
                 this.data.add(this.transform_data(this.line));
             }
