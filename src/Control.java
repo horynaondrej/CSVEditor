@@ -34,6 +34,7 @@ public class Control {
     private HBox footer;
     private int number_of_columns;
     private char separator;
+    private boolean quote;
     private String coding;
     private ArrayList<String> column_names = new ArrayList();
     private String file_name;
@@ -223,10 +224,21 @@ public class Control {
         coding.getItems().add("WINDOWS-1250");
         coding.setValue("UTF-8");
 
+        CheckBox ch = new CheckBox();
+        ch.setSelected(true);
+
         grid.add(new Label("Oddělovač:"), 0,0);
         grid.add(marker,1,0);
         grid.add(new Label("Kódování:"), 0,1);
         grid.add(coding,1,1);
+
+        if (type == false) {
+            grid.add(new Label("Přidat uvozovky:"), 0, 2);
+            grid.add(ch, 1, 2);
+        } else {
+            grid.add(new Label("Obsahuje uvozovky:"), 0, 2);
+            grid.add(ch, 1, 2);
+        }
 
         dialog.getDialogPane().setContent(grid);
 
@@ -240,9 +252,10 @@ public class Control {
 
         Optional<Pair<String, String>> result = dialog.showAndWait();
         result.ifPresent(usernamePassword -> {
-            System.out.println("Marker=" + usernamePassword.getKey() + ", Coding=" + usernamePassword.getValue());
+            //System.out.println("Marker=" + usernamePassword.getKey() + ", Coding=" + usernamePassword.getValue());
             this.separator = marker.getText().charAt(0);
             this.coding = coding.getValue();
+            this.quote = ch.isSelected();
             if (type) {
                 this.open_file();
             } else {
@@ -293,7 +306,7 @@ public class Control {
      */
     private Reader create_file() {
 
-        return new Reader(this.stage, this.separator, this.coding);
+        return new Reader(this.stage, this.separator, this.coding, this.quote);
 
     }
 
@@ -356,11 +369,14 @@ public class Control {
      */
     private void save_file() {
 
-        Writer writer = new Writer("", this.data, this.stage, this.coding);
+        Writer writer = new Writer("",
+                this.data,
+                this.stage,
+                this.coding,
+                this.quote);
         writer.set_file_name(this.file_name);
         writer.write_to_file(this.number_of_columns);
 
     }
-
-
+    
 }
