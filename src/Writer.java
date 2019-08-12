@@ -17,6 +17,7 @@ public class Writer {
 
     private String name;
     private String code;
+    private boolean slashes;
     private Stage g;
     private ObservableList<ObservableList<StringProperty>> data;
     private String file_name = "Untitled";
@@ -28,12 +29,17 @@ public class Writer {
      * @param g
      * @param code
      */
-    public Writer(String name, ObservableList<ObservableList<StringProperty>> data, Stage g, String code) {
+    public Writer(String name,
+                  ObservableList<ObservableList<StringProperty>> data,
+                  Stage g,
+                  String code,
+                  boolean slashes) {
 
         this.name = name;
         this.data = data;
         this.g = g;
         this.code = code;
+        this.slashes = slashes;
 
     }
 
@@ -50,7 +56,10 @@ public class Writer {
             CSVWriter writer = new CSVWriter(new OutputStreamWriter(new FileOutputStream(file.getAbsolutePath()), this.code), ';', '\"', "\n");
             Throwable throwable = null;
             try {
+                //This creates a array (one row)
+                //with strings as how many columns is in table
                 String[] list = new String[number_of_columns];
+                //go through data
                 for (ObservableList i : this.data) {
                     for (int b = 0; b < number_of_columns; ++b) {
                         list[b] = ((StringProperty)i.get(b)).getValue();
